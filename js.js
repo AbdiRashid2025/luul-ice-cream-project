@@ -8,9 +8,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         .classList.remove("search-bar-active");
     }
   });
-
-  //  login and sign up
-
   document.addEventListener("click", function (event) {
     const formElement = document.querySelector(".form");
     if (event.target.closest(".nav-user,.already-account")) {
@@ -27,22 +24,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
   });
 
-  const header = document.querySelector("header");
-  let lastScrollY = window.scrollY;
-  window.addEventListener("scroll", function () {
-    const currentScrollY = window.scrollY;
-
-    if (currentScrollY === 0) {
-      header.classList.remove("header-fix");
-    } else if (currentScrollY < lastScrollY) {
-      header.classList.add("header-fix");
-    } else {
-      header.classList.remove("header-fix");
-    }
-    lastScrollY = currentScrollY;
-  });
-
-  // simple hover animation
   document.querySelectorAll(".footer-social a").forEach((icon) => {
     icon.addEventListener("mouseover", () => {
       icon.style.transform = "scale(1.15)";
@@ -52,50 +33,143 @@ document.addEventListener("DOMContentLoaded", function (event) {
       icon.style.transform = "scale(1)";
     });
   });
-
+  /* ================= ELEMENTS ================= */
   const cartButtons = document.querySelectorAll(".product-cart-btn");
   const orderSection = document.getElementById("order-section");
-  const productSelect = document.getElementById("productSelect");
-  const quantityInput = document.getElementById("quantity");
-  const totalPrice = document.getElementById("totalPrice");
+
+  const orderList = document.getElementById("orderList");
+  const grandTotalEl = document.getElementById("grandTotal");
+
   const alertBox = document.getElementById("orderAlert");
   const alertText = document.getElementById("alertText");
+  const errorBox = document.getElementById("orderError");
 
-  let products = {};
+  const orderForm = document.querySelector(".order-form");
+  const fullName = document.getElementById("fullName");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
+  const address = document.getElementById("address");
 
+  /* ================= CART (LOCALSTORAGE) ================= */
+  let cart = JSON.parse(localStorage.getItem("cart")) || {};
+  updateOrderSummary();
+
+  /* ================= ADD TO CART ================= */
   cartButtons.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
 
       const box = btn.closest(".product-box");
       const name = box.querySelector(".product-text-title").innerText;
-      const priceText = box.querySelector("span").innerText;
+      const priceText = box.querySelector(".product-text-price").innerText;
       const price = parseFloat(priceText.replace("$", ""));
 
-      products[name] = price;
-
-      orderSection.style.display = "block";
-
-      if (![...productSelect.options].some((o) => o.value === name)) {
-        const option = document.createElement("option");
-        option.value = name;
-        option.textContent = `${name} - $${price}`;
-        productSelect.appendChild(option);
+      if (cart[name]) {
+        cart[name].qty += 1;
+      } else {
+        cart[name] = { price, qty: 1 };
       }
 
-      productSelect.value = name;
-      quantityInput.value = 1;
-      totalPrice.innerText = `$${price.toFixed(2)}`;
+      saveCart();
+      updateOrderSummary();
 
-      alertText.innerText = `${name} was added to your order. Scroll down to finish the form.`;
+      orderSection.style.display = "block";
+      alertText.innerText = `${name} added to cart`;
       alertBox.style.display = "flex";
+      errorBox.style.display = "none";
 
       orderSection.scrollIntoView({ behavior: "smooth" });
     });
   });
 
-  quantityInput.addEventListener("input", () => {
-    const price = products[productSelect.value] || 0;
-    totalPrice.innerText = `$${(price * quantityInput.value).toFixed(2)}`;
+  /* ================= UPDATE UI ================= */
+  function updateOrderSummary() {
+    orderList.innerHTML = "";
+    let grandTotal = 0;
+
+    Object.keys(cart).forEach((item) => {
+      const { price, qty } = cart[item];
+      const total = price * qty;
+      grandTotal += total;
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+      <span>${item}</span>
+
+      <div class="qty-controls">
+        <button class="dec-btn" data-item="${item}">➖</button>
+        <span>${qty}</span>
+        <button class="inc-btn" data-item="${item}">➕</button>
+        <button class="remove-btn" data-item="${item}">❌</button>
+      </div>
+
+      <strong>$${total.toFixed(2)}</strong>
+    `;
+
+      orderList.appendChild(li);
+    });
+
+    grandTotalEl.innerText = `$${grandTotal.toFixed(2)}`;
+    bindCartButtons();
+  }
+
+  /* ================= BUTTON ACTIONS ================= */
+  function bindCartButtons() {
+    document.querySelectorAll(".inc-btn").forEach((btn) => {
+      btn.onclick = () => {
+        cart[btn.dataset.item].qty += 1;
+        saveCart();
+        updateOrderSummary();
+      };
+    });
+
+    document.querySelectorAll(".dec-btn").forEach((btn) => {
+      btn.onclick = () => {
+        const item = btn.dataset.item;
+        cart[item].qty -= 1;
+        if (cart[item].qty <= 0) delete cart[item];
+        saveCart();
+        updateOrderSummary();
+      };
+    });
+
+    document.querySelectorAll(".remove-btn").forEach((btn) => {
+      btn.onclick = () => {
+        delete cart[btn.dataset.item];
+        saveCart();
+        updateOrderSummary();
+      };
+    });
+  }
+
+  /* ================= SAVE CART ================= */
+  function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  /* ================= PLACE ORDER ================= */
+  orderForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (
+      Object.keys(cart).length === 0 ||
+      !fullName.value.trim() ||
+      !email.value.trim() ||
+      !phone.value.trim() ||
+      !address.value.trim()
+    ) {
+      errorBox.innerText = "❌ Fadlan ku dar product & buuxi dhammaan xogta.";
+      errorBox.style.display = "block";
+      return;
+    }
+
+    errorBox.style.display = "none";
+    alertText.innerText = "✅ Order-kaaga waa la helay. Mahadsanid!";
+    alertBox.style.display = "flex";
+
+    cart = {};
+    saveCart();
+    updateOrderSummary();
+    orderForm.reset();
   });
 });

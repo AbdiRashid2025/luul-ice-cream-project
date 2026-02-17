@@ -39,7 +39,7 @@ header .header-fix {
   width: 100%;
   z-index: 101;
   box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.05);
-  animation: navigation 0.6s;
+  animation: navanimation 0.6s;
 }
 .navigation {
   display: flex;
@@ -51,12 +51,11 @@ header .header-fix {
   padding: 30px 0px;
 }
 
-header .header-fix,
-.navigation {
+header .header-fix .navigation {
   padding: 15px 0px;
 }
 
-@keyframes navigation {
+@keyframes navanimation {
   0% {
     top: -100%;
   }
@@ -354,6 +353,15 @@ header .header-fix,
   display: block;
   margin: 15px 0 5px;
 }
+.order-error {
+  display: none;
+  margin-bottom: 20px;
+  background: #ffeaea;
+  color: #c0392b;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+}
 
 .order-form input,
 .order-form select {
@@ -386,6 +394,124 @@ header .header-fix,
   color: #fff;
   cursor: pointer;
   background: linear-gradient(to right, #bcab93, #880c1e);
+}
+/* ================= ORDER SUMMARY ================= */
+.order-summary {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.order-summary h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+  border-bottom: 2px solid #f2f2f2;
+  padding-bottom: 10px;
+}
+
+/* LIST */
+#orderList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ITEM */
+#orderList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed #e5e5e5;
+  gap: 10px;
+  font-size: 14px;
+}
+
+#orderList li:last-child {
+  border-bottom: none;
+}
+
+/* PRODUCT NAME */
+#orderList li span {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+}
+
+/* QUANTITY CONTROLS */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-controls span {
+  min-width: 22px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* BUTTONS */
+.qty-controls button {
+  border: none;
+  background: #f1f1f1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.qty-controls button:hover {
+  background: #ddd;
+}
+
+/* REMOVE */
+.remove-btn {
+  background: #ff4d4d !important;
+  color: #fff;
+}
+
+.remove-btn:hover {
+  background: #e63939 !important;
+}
+
+/* PRICE */
+#orderList li strong {
+  min-width: 70px;
+  text-align: right;
+  color: #111;
+}
+
+/* TOTAL */
+.grand-total {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 2px solid #f2f2f2;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.grand-total strong {
+  color: #ff7a00;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  #orderList li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #orderList li strong {
+    align-self: flex-end;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1251,6 +1377,22 @@ footer {
   .blog-container {
     grid-template-columns: 1fr 1fr;
   }
+  .about {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+    width: 70%;
+    margin: auto;
+    align-items: center;
+  }
+
+  .about-text h2 {
+    font-size: 12px;
+  }
   .blog-box {
     display: flex;
     flex-direction: column;
@@ -1305,6 +1447,13 @@ footer {
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
   }
+  .about-image img {
+    width: 250px;
+  }
+  .about-text h2 {
+    font-size: 12px;
+  }
+
   .blog-container {
     grid-template-columns: 1fr;
   }
@@ -1325,6 +1474,19 @@ footer {
   .service-box {
     width: 100%;
   }
+  .about-text h2 {
+    font-size: 8px;
+  }
+  .about-image img {
+    width: 150px;
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+    width: 60%;
+    margin: auto;
+    align-items: center;
+  }
 }
 
 @media (max-width: 320px) {
@@ -1344,5 +1506,18 @@ footer {
   }
   .download-app-text strong {
     font-size: 1.3rem;
+  }
+  .about-text h2 {
+    font-size: 8px;
+  }
+  .about-image img {
+    width: 90px;
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+    width: 50%;
+    margin: auto;
+    align-items: center;
   }
 }

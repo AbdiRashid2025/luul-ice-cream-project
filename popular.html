@@ -265,7 +265,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">chicken-burger</a>
-              <span>20$ <del>40$</del></span>
+              <span class="product-text-price">20$ <del>40$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -294,7 +294,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">fish-salad</a>
-              <span>25$ <del>50$</del></span>
+              <span class="product-text-price">25$ <del>50$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -323,7 +323,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">chicken</a>
-              <span>10$ <del>15$</del></span>
+              <span class="product-text-price">10$ <del>15$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -352,7 +352,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">delicious-looking</a>
-              <span>30$ <del>55$</del></span>
+              <span class="product-text-price">30$ <del>55$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -381,7 +381,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">fresh-fish</a>
-              <span>15$ <del>30$</del></span>
+              <span class="product-text-price">15$ <del>30$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -410,7 +410,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">chicken-burger</a>
-              <span>20$ <del>40$</del></span>
+              <span class="product-text-price">20$ <del>40$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -439,7 +439,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">simple-lunch</a>
-              <span>150$ <del>25$</del></span>
+              <span class="product-text-price">150$ <del>25$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -468,7 +468,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">chicken-burger</a>
-              <span>20$ <del>40$</del></span>
+              <span class="product-text-price">20$ <del>40$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -497,7 +497,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">chicken-burger</a>
-              <span>20$ <del>40$</del></span>
+              <span class="product-text-price">20$ <del>40$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -531,7 +531,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">chicken-burger</a>
-              <span>20$ <del>40$</del></span>
+              <span class="product-text-price">20$ <del>40$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -560,36 +560,7 @@
             </div>
             <div class="product-box-text">
               <a href="#" class="product-text-title">fish-salad</a>
-              <span>25$ <del>50$</del></span>
-              <a href="#" class="product-cart-btn">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#000000"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V6l-3-4H6zM3.8 6h16.4M16 10a4 4 0 1 1-8 0"
-                  />
-                </svg>
-                Add to cart
-              </a>
-            </div>
-          </div>
-          <!-- box-3 -->
-          <div class="product-box">
-            <div class="product-box-img">
-              <img src="/images/p3.jpg" alt="" srcset="" />
-              <span>New</span>
-            </div>
-            <div class="product-box-text">
-              <a href="#" class="product-text-title">chicken</a>
-              <span>10$ <del>15$</del></span>
+              <span class="product-text-price">25$ <del>50$</del></span>
               <a href="#" class="product-cart-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -625,6 +596,7 @@
     </section>
 
     <!-- ================= ORDER FORM ================= -->
+
     <section id="order-section" class="order-section">
       <div class="order-container">
         <div class="order-header">
@@ -652,24 +624,40 @@
           <div class="grid">
             <div>
               <label>Full Name *</label>
-              <input type="text" placeholder="Enter your full name" />
+              <input type="text" placeholder="Enter your full name" required />
             </div>
             <div>
               <label>Email Address *</label>
-              <input type="email" placeholder="your.email@example.com" />
+              <input
+                type="email"
+                id="email"
+                placeholder="your.email@example.com"
+                required
+              />
             </div>
             <div>
               <label>Phone Number *</label>
-              <input type="tel" placeholder="+252 61 0000000" />
+              <input
+                type="tel"
+                id="phone"
+                placeholder="+252 61 0000000"
+                required
+              />
             </div>
             <div>
               <label>Delivery Address *</label>
-              <input type="text" placeholder="Street, City" />
+              <input
+                type="text"
+                id="address"
+                placeholder="Street, City"
+                required
+              />
             </div>
           </div>
 
           <button type="submit" class="place-order-btn">🛒 Place Order</button>
         </form>
+        <div class="order-error" id="orderError"></div>
       </div>
     </section>
 
